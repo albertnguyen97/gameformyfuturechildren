@@ -24,7 +24,7 @@ listbox.pack(padx=10, pady=10)
 
 # Create an Entry widget for input
 entry = tk.Entry(root)
-entry.pack(padx=10, pady=5)
+entry.pack(text="Put a task:",padx=10, pady=5)
 
 # Create buttons to add and remove items
 add_button = tk.Button(root, text="Add Item", command=add_item)
