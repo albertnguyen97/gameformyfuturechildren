@@ -1,12 +1,13 @@
 import requests
-
+from twilio.rest import Client
+import math
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-STOCK_API_KEY = "FAKE"
-news_api = "FAKE"
+STOCK_API_KEY = "Q7RQA18MQOG7GPSA"
+news_api = "fa85284ae07946929110e8964e59cbfa"
 stock_params = {
     "function": "TIME_SERIES_DAILY",
     "symbol": STOCK,
@@ -24,28 +25,27 @@ day_before_yesterday_data = data_list[1]
 day_before_yesterday_closing_price = day_before_yesterday_data["4. close"]
 print(day_before_yesterday_closing_price)
 
-difference = abs(float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
-print(difference)
-diff_percent = (difference / float(yesterday_closing_price)) * 100
-print(diff_percent)
+difference = (float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
+up_down = None
+diff_percent = round((difference / float(yesterday_closing_price)) * 100, 2)
 
-if diff_percent > 4:
-    print("Get news")
-
-# STEP 2: Use https://newsapi.org
-# Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
+if diff_percent > 0:
+    up_down = "^"
+else:
+    up_down = "v"
 if diff_percent > 1:
     news_params = {
         "apiKey": news_api,
         "qInTitle": COMPANY_NAME
     }
-    requests.get(NEWS_ENDPOINT, params=news_params)
+    news_response = requests.get(NEWS_ENDPOINT, params=news_params)
+    articles = news_response.json()["articles"]
+    three_articles = articles[:3]
+    print(three_articles)
 
-## STEP 3: Use https://www.twilio.com
-# Send a seperate message with the percentage change and each article's title and description to your phone number. 
-
-
+    list_articles = [f"{STOCK} {up_down}{diff_percent}% \nHeadline: {article['title']}. \nBrief: {article['description']}" for article in three_articles]
 # Optional: Format the SMS message like this:
+    print(list_articles)
 """
 TSLA: 🔺2%
 Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
