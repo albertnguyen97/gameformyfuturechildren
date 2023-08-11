@@ -8,7 +8,7 @@ today_tuple = (today.month, today.day)
 data = pandas.read_csv("birthdays.csv")
 
 my_email = "chaunm.hmc@gmail.com"
-password = "fakepassword" # in app passwords
+password = "fakepassword" # in app passwords at account google
 
 new_dict = {(data_row["month"], data_row["day"]): data_row for(index, data_row) in data.iterrows()}
 
