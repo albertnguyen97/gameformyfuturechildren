@@ -13,6 +13,9 @@ list_movies = []
 for article in all_articles:
     name_movies = article.find_all('a')
     list_movies.extend(name_movies)
-
-for i in list_movies:
-    print(i.text)
+list_final = [i.text for i in list_movies]
+count = 0
+with open("movies.txt", mode="w") as file:
+    for movie in list_final:
+        count += 1
+        file.write(f"{count}, {movie}\n")
