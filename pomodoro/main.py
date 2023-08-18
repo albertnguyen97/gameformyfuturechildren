@@ -14,9 +14,9 @@ YELLOW = "#f7f5dd"
 ROYALBLUE = "#4169E1"
 LIGHTSEAGREEN = "#20B2AA"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = 0.1
+SHORT_BREAK_MIN = 0.1
+LONG_BREAK_MIN = 0.1
 reps = 0
 counting = True
 continue_time = 0
@@ -56,22 +56,7 @@ def start_timer():
     work_sec = WORK_MIN * 60
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
-    if reps % 8 == 0:
-        count_down(long_break_sec)
-        title_label.config(text="Long Break", fg=RED, bg=LIGHTSEAGREEN)
-        window.config(bg=LIGHTSEAGREEN)
-        start_button.config(bg=LIGHTSEAGREEN)
-        show_history_button.config(bg=LIGHTSEAGREEN)
-        canvas.config(bg=LIGHTSEAGREEN)
-        reset_button.config(bg=LIGHTSEAGREEN)
-        stop_resume_button.config(bg=LIGHTSEAGREEN)
-        listbox.config(bg=LIGHTSEAGREEN)
-        check_marks.config(bg=LIGHTSEAGREEN)
-        complete_task_button.config(bg=LIGHTSEAGREEN)
-        add_button.config(bg=LIGHTSEAGREEN)
-        remove_button.config(bg=LIGHTSEAGREEN)
-
-    if reps % 2 == 0:
+    if reps % 2 == 0 and reps % 8 != 0:
         count_down(short_break_sec)
         title_label.config(text="Short Break", fg=PINK, bg=ROYALBLUE)
         window.config(bg=ROYALBLUE)
@@ -85,6 +70,21 @@ def start_timer():
         complete_task_button.config(bg=ROYALBLUE)
         add_button.config(bg=ROYALBLUE)
         remove_button.config(bg=ROYALBLUE)
+
+    elif reps % 8 == 0:
+        count_down(long_break_sec)
+        title_label.config(text="Long Break", fg=RED, bg=LIGHTSEAGREEN)
+        window.config(bg=LIGHTSEAGREEN)
+        start_button.config(bg=LIGHTSEAGREEN)
+        show_history_button.config(bg=LIGHTSEAGREEN)
+        canvas.config(bg=LIGHTSEAGREEN)
+        reset_button.config(bg=LIGHTSEAGREEN)
+        stop_resume_button.config(bg=LIGHTSEAGREEN)
+        listbox.config(bg=LIGHTSEAGREEN)
+        check_marks.config(bg=LIGHTSEAGREEN)
+        complete_task_button.config(bg=LIGHTSEAGREEN)
+        add_button.config(bg=LIGHTSEAGREEN)
+        remove_button.config(bg=LIGHTSEAGREEN)
 
     else:
         count_down(work_sec)
