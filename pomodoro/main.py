@@ -14,9 +14,9 @@ YELLOW = "#f7f5dd"
 ROYALBLUE = "#4169E1"
 LIGHTSEAGREEN = "#20B2AA"
 FONT_NAME = "Courier"
-WORK_MIN = 0.1
-SHORT_BREAK_MIN = 0.1
-LONG_BREAK_MIN = 0.1
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 20
 reps = 0
 counting = True
 continue_time = 0
@@ -26,7 +26,10 @@ timer = None
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
     global counting
-    window.after_cancel(timer)
+    if timer is None:
+        pass
+    else:
+        window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
     title_label.config(text="Timer", bg=YELLOW)
     check_marks.config(text="")
@@ -34,7 +37,7 @@ def reset_timer():
     window.config(bg=YELLOW)
     start_button.config(bg=YELLOW)
     canvas.config(bg=YELLOW)
-    show_history_button.config(bg=YELLOW)
+    # show_history_button.config(bg=YELLOW)
     reset_button.config(bg=YELLOW)
     stop_resume_button.config(bg=YELLOW)
     listbox.config(bg=YELLOW)
@@ -62,7 +65,7 @@ def start_timer():
         window.config(bg=ROYALBLUE)
         start_button.config(bg=ROYALBLUE)
         canvas.config(bg=ROYALBLUE)
-        show_history_button.config(bg=ROYALBLUE)
+        # show_history_button.config(bg=ROYALBLUE)
         reset_button.config(bg=ROYALBLUE)
         stop_resume_button.config(bg=ROYALBLUE)
         check_marks.config(bg=ROYALBLUE)
@@ -76,7 +79,7 @@ def start_timer():
         title_label.config(text="Long Break", fg=RED, bg=LIGHTSEAGREEN)
         window.config(bg=LIGHTSEAGREEN)
         start_button.config(bg=LIGHTSEAGREEN)
-        show_history_button.config(bg=LIGHTSEAGREEN)
+        # show_history_button.config(bg=LIGHTSEAGREEN)
         canvas.config(bg=LIGHTSEAGREEN)
         reset_button.config(bg=LIGHTSEAGREEN)
         stop_resume_button.config(bg=LIGHTSEAGREEN)
@@ -92,7 +95,7 @@ def start_timer():
         window.config(bg=YELLOW)
         start_button.config(bg=YELLOW)
         canvas.config(bg=YELLOW)
-        show_history_button.config(bg=YELLOW)
+        # show_history_button.config(bg=YELLOW)
         reset_button.config(bg=YELLOW)
         stop_resume_button.config(bg=YELLOW)
         check_marks.config(bg=YELLOW)
@@ -157,7 +160,11 @@ def remove_item():
 
 # ---------------------------- complete task ------------------------------- #
 def complete_task():
-    pass
+    selected_task = listbox.curselection()
+    if selected_task:
+        temp = listbox.get(selected_task)
+        listbox.delete(selected_task)
+        listbox.insert(selected_task, temp + "   ✓️")
 
 
 # ---------------------------- sound ------------------------------- #
@@ -199,9 +206,9 @@ reset_button = Button(text="Reset", highlightthickness=0, fg=GREEN, bg=YELLOW, f
                       command=reset_timer, width=7, height=1)
 reset_button.grid(column=3, row=3)
 
-show_history_button = Button(text="History", highlightthickness=0, fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"),
-                             width=10, height=1)
-show_history_button.grid(column=1, row=2)
+# show_history_button = Button(text="History", highlightthickness=0, fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"),
+#                              width=10, height=1)
+# show_history_button.grid(column=1, row=2)
 
 check_marks = Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"))
 check_marks.grid(column=0, row=4)
